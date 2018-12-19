@@ -38,5 +38,33 @@
   		</div>
   	</div>
   </div>
+
+  <script type="text/javascript">
+    const player = document.getElementsByTagName('audio')[0];
+    const btnPlay = document.getElementsByClassName('playstate')[0];
+    const btnStop = document.getElementsByClassName('stop')[0];
+    const btnBack = document.getElementsByClassName('back')[0];
+    const btnNext = document.getElementsByClassName('next')[0];
+    const title = document.getElementsByClassName('title')[0];
+    const state = document.getElementsByClassName('mediaplayer')[0];
+
+    function isPlayed() {
+      if (state.classList.contains('play')) {
+        state.classList.remove('play');
+        player.pause();
+      } else {
+        state.classList.add('play');
+        player.play();
+      }
+    }
+
+    btnPlay.onclick = Play;
+
+    btnStop.onclick = function() {
+      isPlayed();
+      player.currentTime = 0;
+    }
+
+  </script>
 </body>
 </html>
