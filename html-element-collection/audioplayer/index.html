@@ -9,7 +9,7 @@
 </head>
 <body>
   <div class="mediaplayer">
-  	<audio src="https://d34x6xks9kc6p2.cloudfront.net/540997b0-a35f-4b69-86d6-b1c925c4a264/540997b0-a35f-4b69-86d6-b1c925c4a264.mp3"></audio>
+  	<audio></audio>
   	<div class="discarea">
   		<div class="disc">
   		</div>
@@ -20,7 +20,7 @@
   		</div>
   	</div>
   	<div class="controls">
-  		<span class="title" title="LA Chill Tour"></span>
+  		<span class="title"></span>
   		<div class="buttons">
   			<button class="back">
   				<i class="fa fa-backward"></i>
@@ -40,13 +40,27 @@
   </div>
 
   <script type="text/javascript">
+    const playList = ["mp3/LA Chill Tour.mp3",
+                      "mp3/LA Fusion Jam.mp3",
+                      "mp3/This is it band.mp3"
+                      ];
+    let currentSong = 0;
+
     const player = document.getElementsByTagName('audio')[0];
+    player.src = playList[currentSong];
     const btnPlay = document.getElementsByClassName('playstate')[0];
     const btnStop = document.getElementsByClassName('stop')[0];
     const btnBack = document.getElementsByClassName('back')[0];
     const btnNext = document.getElementsByClassName('next')[0];
-    const title = document.getElementsByClassName('title')[0];
+    const title = document.getElementsByClassName('controls')[0].getElementsByClassName('title')[0];
     const state = document.getElementsByClassName('mediaplayer')[0];
+
+    // Подумать над регулярным выражением
+    function getTitle() {
+      title.title = playList[currentSong].match(/[^mp3/](\W*\w*)*(?=\.mp3$)/)[0];
+    }
+
+    getTitle();
 
     function isPlayed() {
       if (state.classList.contains('play')) {
@@ -58,11 +72,48 @@
       }
     }
 
-    btnPlay.onclick = Play;
+    function rememberState() {
+      if (state.classList.contains('play')) {
+        player.play();
+      }
+    }
+
+    btnPlay.onclick = isPlayed;
 
     btnStop.onclick = function() {
-      isPlayed();
+      player.pause();
+      state.classList.remove('play');
       player.currentTime = 0;
+    }
+
+    function songInctement() {
+      if(currentSong === playList.length - 1) {
+        currentSong = 0;
+      } else {
+        currentSong++;
+      }
+      player.src = playList[currentSong];
+    }
+
+    function songDecrement() {
+      if(currentSong === 0) {
+        currentSong = playList.length - 1;
+      } else {
+        currentSong--;
+      }
+      player.src = playList[currentSong];
+    }
+
+    btnNext.onclick = function() {
+      songInctement();
+      rememberState();
+      getTitle();
+    }
+
+    btnBack.onclick = function() {
+      songDecrement();
+      rememberState();
+      getTitle();
     }
 
   </script>
