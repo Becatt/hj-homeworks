@@ -9,11 +9,16 @@ const links = [
                 ];
 const img = document.getElementById('slider');
 
-let slider = setTimeout(function nextSlide() {
-  for (let i = 0; i < links.length; i++) {
-      setTimeout(function() {
-        img.src = links[i];
-      }, i * 5000);
+let currentPhoto = 0;
+img.src = links[currentPhoto];
+
+function nextSlide() {
+  img.src = links[currentPhoto];
+  currentPhoto++;
+  if(currentPhoto === links.length) {
+    currentPhoto = 0;
   }
-  slider = setTimeout(nextSlide, links.length * 5000);
-}, 0);
+  setTimeout(nextSlide, 5000);
+}
+
+nextSlide();
