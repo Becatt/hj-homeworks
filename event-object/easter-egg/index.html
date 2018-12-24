@@ -45,5 +45,31 @@
       </svg>
     </div>
   </main>
+  <script type="text/javascript">
+    function openMenu(event) {
+      if(event.ctrlKey && event.altKey && event.code === 'KeyT') {
+        document.getElementsByTagName('nav')[0].classList.toggle('visible');
+      }
+    };
+
+    document.addEventListener('keydown', openMenu);
+
+    const password = [];
+    function showEasterEgg(event) {
+      if(password.length < 9) {
+        password.push(event.code);
+      } else {
+        password.shift();
+        password.push(event.code);
+      }
+
+      if(password.join() === 'KeyY,KeyT,KeyN,KeyJ,KeyK,KeyJ,KeyU,KeyB,KeyZ') {
+        document.getElementsByClassName('secret')[0].classList.add('visible');
+      }
+    };
+
+    document.addEventListener('keypress', showEasterEgg);
+
+  </script>
 </body>
 </html>
