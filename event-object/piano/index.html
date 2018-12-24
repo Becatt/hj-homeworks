@@ -25,5 +25,44 @@
       <audio src=""></audio>
     </li>
   </ul>
+  <script type="text/javascript">
+    const sounds = {
+      'higher': ["sounds/higher/first.mp3",
+                 "sounds/higher/second.mp3",
+                 "sounds/higher/third.mp3",
+                 "sounds/higher/fourth.mp3",
+                 "sounds/higher/fifth.mp3"
+                ],
+      'lower': ["sounds/lower/first.mp3",
+                 "sounds/lower/second.mp3",
+                 "sounds/lower/third.mp3",
+                 "sounds/lower/fourth.mp3",
+                 "sounds/lower/fifth.mp3"
+                ],
+      'middle': ["sounds/middle/first.mp3",
+                 "sounds/middle/second.mp3",
+                 "sounds/middle/third.mp3",
+                 "sounds/middle/fourth.mp3",
+                 "sounds/middle/fifth.mp3"
+                ]
+    }
+
+    const btns = document.getElementsByTagName('li');
+
+    for (let i = 0; i < btns.length; i++) {
+      btns[i].addEventListener('click', () => {
+        let tone = 'middle';
+        if(event.shiftKey) {
+          tone = 'lower';
+        } else if (event.altKey) {
+          tone = 'higher';
+        }
+        const player = btns[i].getElementsByTagName('audio')[0];
+        player.src = sounds[tone][i];
+        console.log(player);
+        player.play();
+      });
+    }
+  </script>
 </body>
 </html>
