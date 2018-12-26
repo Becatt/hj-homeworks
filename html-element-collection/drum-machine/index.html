@@ -40,6 +40,8 @@
     for(let btn of btns) {
       const player = btn.getElementsByTagName('audio')[0];
       btn.onclick = () => {
+        player.pause();
+        player.currentTime = 0;
         player.play();
       }
     }
