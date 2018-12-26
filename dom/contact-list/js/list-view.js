@@ -4,6 +4,19 @@ function loadContacts() {
   return '[{"name":"Василий Николаев","email":"vnikola9999@gmail.com","phone":"+7 999 777 34 34"},{"name":"Елена Вишневская","email":"lenochka22333@yandex.ru","phone":"+7 888 777 11 11"},{"name":"Артём Кузнецов","email":"kuznya_foreva@gmail.com","phone":"+7 222 555 76 67"},{"name":"Алексей Гусенко","email":"jiznboliyaetoznayu@mail.com","phone":"+7 333 545 12 34"},{"name":"Маргарита Сотникова","email":"pobeditelnicapojizni111@gmail.com","phone":"+7 323 534 32 12"}]';
 }
 
+function deliverContcts() {
+  const contacts = JSON.parse(loadContacts());
+  const contactslist = document.getElementsByClassName('contacts-list')[0];
+  function getContacts() {
+    let strContact ='';
+    for(let contact of contacts) {
+       strContact = strContact + `<li data-email="${contact.email}" data-phone="${contact.phone}"><string>${contact.name}</string></li>`;
+    }
+    return strContact;
+  }
+  contactslist.innerHTML = getContacts();
+}
+
 function contactClick(event) {
   let target = null;
   if (event.target.tagName === 'LI') {
@@ -33,6 +46,8 @@ function init() {
   container = document.getElementById('container');
   container.querySelector('.list-view').addEventListener('click', contactClick);
   container.querySelector('.back').addEventListener('click', backClick);
+  deliverContcts();
 }
 
 document.addEventListener('DOMContentLoaded', init);
+
