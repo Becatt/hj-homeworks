@@ -45,24 +45,45 @@
                  "sounds/middle/fourth.mp3",
                  "sounds/middle/fifth.mp3"
                 ]
-    }
+    };
 
     const btns = document.getElementsByTagName('li');
+    const container = document.getElementsByClassName('set')[0];
+    let tone = 'middle';
+
+    document.addEventListener('keydown', () => {
+      if(event.shiftKey) {
+        tone = 'lower';
+        container.classList.remove('middle');
+        container.classList.add(tone);
+      } else if(event.altKey) {
+        event.preventDefault();
+        tone = 'higher';
+        container.classList.remove('middle');
+        container.classList.add(tone);
+      }
+    });
+
+    document.addEventListener('keyup', () => {
+      if(event.key === 'Shift') {
+        tone = 'middle';
+        container.classList.remove('lower');
+        container.classList.add(tone);
+      } else if (event.key === 'Alt') {
+        tone = 'middle';
+        container.classList.remove('higher');
+        container.classList.add(tone);
+      }
+    });
 
     for (let i = 0; i < btns.length; i++) {
       btns[i].addEventListener('click', () => {
-        let tone = 'middle';
-        if(event.shiftKey) {
-          tone = 'lower';
-        } else if (event.altKey) {
-          tone = 'higher';
-        }
         const player = btns[i].getElementsByTagName('audio')[0];
         player.src = sounds[tone][i];
-        console.log(player);
         player.play();
       });
     }
+
   </script>
 </body>
 </html>
