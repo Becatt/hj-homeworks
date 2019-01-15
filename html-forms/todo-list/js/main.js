@@ -1,6 +1,6 @@
 'use strict';
 
-const listBlock = document.getElementsByClassName('list-block')[0];
+const listBlock = document.querySelector('.list-block');
 const inputs = listBlock.getElementsByTagName('input');
 const output = document.getElementsByTagName('output')[0];
 
@@ -10,7 +10,7 @@ function countTask() {
 
   for(let item of inputs) {
     taskCount++;
-    if (item.hasAttribute('checked')) {
+    if (item.checked) {
       taskEnd++;
     }
   }
@@ -27,10 +27,10 @@ function countTask() {
 countTask();
 
 function checked(event) {
-  if (this.hasAttribute('checked')) {
-    this.removeAttribute('checked');
-  } else {
+  if(this.checked) {
     this.setAttribute('checked', '');
+  } else {
+    this.removeAttribute('checked');
   }
   countTask();
 }
