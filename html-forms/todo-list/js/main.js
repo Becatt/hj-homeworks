@@ -36,5 +36,5 @@ function checked(event) {
 }
 
 for(let item of inputs) {
-  item.addEventListener('click', checked);
+  item.addEventListener('change', checked);
 }
