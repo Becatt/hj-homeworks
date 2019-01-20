@@ -2,7 +2,9 @@
 
 function handleTableClick(event) {
   const el = event.target;
-  if(el.tagName === 'TH') {
+  if(el.tagName !== 'TH') {
+    return;
+  } else {
     if(el.getAttribute('data-dir') === '1') {
       el.setAttribute('data-dir', '-1');
     } else {
