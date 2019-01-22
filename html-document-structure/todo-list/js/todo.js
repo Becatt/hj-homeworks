@@ -5,9 +5,6 @@ Array.from(container.querySelectorAll('input')).forEach(input => input.addEventL
 
 function updateInputStatus() {
   const parent = this.parentElement
-  if(this.checked) {
-    container.querySelector('.done').insertBefore(parent, null);
-  } else {
-    const undone = container.querySelector('.undone').insertBefore(parent, null);
-  }
+  const queryStr = this.checked ? '.done' : '.undone';
+  container.querySelector(queryStr).appendChild(parent);
 }

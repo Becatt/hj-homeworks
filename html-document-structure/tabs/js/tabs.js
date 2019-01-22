@@ -36,5 +36,9 @@ function showArticle() {
       item.classList.add('hidden');
     }
   });
+
+  const sections = document.querySelectorAll('section');
+  console.log(sections.length);
+
   content.querySelector(`[data-tab-title = ${this.textContent}]`).classList.remove('hidden');
 }

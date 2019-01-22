@@ -7,55 +7,43 @@ const butPrev = container.querySelector('a[data-action=prev]');
 const butFirst = container.querySelector('a[data-action=first]');
 const butLast = container.querySelector('a[data-action=last]');
 
+butNext.addEventListener('click', moveSlide);
+butPrev.addEventListener('click', moveSlide);
+butFirst.addEventListener('click', moveSlide);
+butLast.addEventListener('click', moveSlide);
+
 slides.firstElementChild.classList.add('slide-current');
 UpdateButtonStatus();
 
 function moveSlide() {
+  if(event.target.classList.contains('disabled')) {
+    return;
+  }
+
   const currentSlide = container.querySelector('.slide-current');
   currentSlide.classList.remove('slide-current');
 
-  switch(event.currentTarget.getAttribute('data-action')) {
+  switch(event.target.getAttribute('data-action')) {
     case 'next':
       currentSlide.nextElementSibling.classList.add('slide-current');
-      UpdateButtonStatus();
       break;
     case 'prev':
       currentSlide.previousElementSibling.classList.add('slide-current');
-      UpdateButtonStatus();
       break;
     case 'first':
       slides.firstElementChild.classList.add('slide-current');
-      UpdateButtonStatus();
       break;
     case 'last':
       slides.lastElementChild.classList.add('slide-current');
-      UpdateButtonStatus();
       break;
   }
+  UpdateButtonStatus();
 }
 
 function UpdateButtonStatus() {
   const currentSlide = container.querySelector('.slide-current');
-  if(currentSlide.nextElementSibling) {
-    butNext.classList.remove('disabled');
-    butLast.classList.remove('disabled');
-    butNext.addEventListener('click', moveSlide);
-    butLast.addEventListener('click', moveSlide);
-  } else {
-    butNext.classList.add('disabled');
-    butLast.classList.add('disabled');
-    butNext.removeEventListener('click', moveSlide);
-    butLast.removeEventListener('click', moveSlide);
-  }
-  if(currentSlide.previousElementSibling) {
-    butPrev.classList.remove('disabled');
-    butFirst.classList.remove('disabled');
-    butPrev.addEventListener('click', moveSlide);
-    butFirst.addEventListener('click', moveSlide);
-  } else {
-    butPrev.classList.add('disabled');
-    butFirst.classList.add('disabled');
-    butPrev.removeEventListener('click', moveSlide);
-    butFirst.removeEventListener('click', moveSlide);
-  }
+  butNext.classList.toggle('disabled', !currentSlide.nextElementSibling);
+  butLast.classList.toggle('disabled', !currentSlide.nextElementSibling);
+  butPrev.classList.toggle('disabled', !currentSlide.previousElementSibling);
+  butFirst.classList.toggle('disabled', !currentSlide.previousElementSibling);
 }
