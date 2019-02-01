@@ -23,8 +23,10 @@ function insertDataRecipe(data) {
 }
 
 function insertDataRaiting(data) {
-  food.querySelector('[data-rating]').textContent = data.rating; // округлить до сотых
-  // food.querySelector('[data-star]').textContent = data.rating; // добавить ширину
+  const rating = Math.round(data.rating*100)/100
+  food.querySelector('[data-rating]').textContent = rating.toFixed(2);
+  const height = data.rating/10*100;
+  food.querySelector('[data-star]').style = `width: ${height}%`;
   food.querySelector('[data-votes]').textContent = `(${data.votes} оценок)`;
 }
 
