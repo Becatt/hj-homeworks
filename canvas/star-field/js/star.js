@@ -4,7 +4,6 @@ const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 canvas.addEventListener('click', () => createStars(randomInt(200, 400)));
 
-// console.log(canvas.height);
 createStars(randomInt(200, 400));
 
 function randomFraction(min = 0, max = 0) {
