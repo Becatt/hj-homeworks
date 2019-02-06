@@ -16,7 +16,7 @@ const ws = new WebSocket('wss://neto-api.herokuapp.com/realtime');
 ws.addEventListener('message', event => {
   const response = JSON.parse(event.data);
   if (isFirst) {
-    Array.from(response).forEach(data => realtime.addData([Number(data.online)], data.time));
+    Array.from(response).reverse().forEach(data => realtime.addData([Number(data.online)], data.time));
     // event.data
     //   .split('\n')
     //   .map(line => line.split('|'))
