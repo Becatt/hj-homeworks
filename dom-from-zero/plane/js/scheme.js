@@ -15,17 +15,18 @@ btnSetEmpty.setAttribute('disabled', '');
 btnSetFull.addEventListener('click', () => {
   event.preventDefault();
   Array.from(seatMapDiv.querySelectorAll('.seat')).forEach((el) => {
-    el.classList.add('adult')
+    el.classList.remove('half');
+    el.classList.add('adult');
   });
-  getTotal();
+  setTotal();
 });
 
 btnSetEmpty.addEventListener('click', () => {
   event.preventDefault();
   Array.from(seatMapDiv.querySelectorAll('.seat')).forEach((el) => {
-    el.classList.remove('adult', 'half')
+    el.classList.remove('adult', 'half');
   });
-  getTotal();
+  setTotal();
 });
 
 btnSeatMap.addEventListener('click', getData);
@@ -63,7 +64,7 @@ function getData(event) {
 
     const seats = seatMapDiv.querySelectorAll('.seat');
 
-    getTotal();
+    setTotal();
 
     Array.from(seats).forEach((el) => {
       el.addEventListener('click', (event) => {
@@ -82,7 +83,7 @@ function getData(event) {
             currentTarget.classList.add('adult');
           }
         }
-        getTotal();
+        setTotal();
       });
     });
   }
@@ -138,7 +139,7 @@ function getData(event) {
 
 }
 
-function getTotal() {
+function setTotal() {
   const adult = document.querySelectorAll('.adult').length,
         half = document.querySelectorAll('.half').length;
 
