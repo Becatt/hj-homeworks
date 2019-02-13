@@ -5,9 +5,9 @@ const app = document.querySelector('.app'),
       controls = app.querySelector('.controls'),
       btn = document.getElementById('take-photo'),
       list = document.querySelector('.list'),
-      photos = []; // массив для хранения карточек фото
-let photoNumber = 0;
+      canvas = document.createElement('canvas');
 
+app.appendChild(canvas);
 // настраиваем работу с камерой
 // работа с видео
 window.navigator.mediaDevices.getUserMedia({
@@ -27,12 +27,13 @@ window.navigator.mediaDevices.getUserMedia({
   btn.addEventListener('click', (event) => {
 
     // настраиваем фото
-    const canvas = document.createElement('canvas');
-    app.appendChild(canvas);
+
+
     const ctx = canvas.getContext('2d');
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     ctx.drawImage(video, 0, 0);
+
 
     // воспроизведение щелчка затвора
     const audio = document.createElement('audio');
@@ -85,42 +86,44 @@ window.navigator.mediaDevices.getUserMedia({
       }]
     }
 
-    const firstChild = list.querySelector('figure');
-    const photo = createElement(figure);
-
-    photoNumber++
-    photo.setAttribute('data-index', photoNumber);
+    const firstChild = list.querySelector('figure'),
+          photo = createElement(figure);
 
     // вешаем обработчики событий на кнопки карточки с фото
     photo.addEventListener('click', event => {
       // event.preventDefault();
-      const curIndex = event.currentTarget.getAttribute('data-index');
+      const currentTarget = event.currentTarget;
       // console.log(curIndex);
 
       // удаление
       if(event.target.textContent === 'delete') {
-         list.removeChild(list.querySelector(`[data-index="${curIndex}"]`))
+         list.removeChild(currentTarget)
         }
 
-      // загрузка на сервер
+      // загрузка на сервер, почему-то уходит только верхняя левая часть фото
       if(event.target.textContent === 'file_upload') {
-        const request = new XMLHttpRequest();
-        request.addEventListener("load", () => {
-          try {
-          console.log(request.responseText);
-          }
-          catch (err) {
+        const img = currentTarget.querySelector('img'),
+              canvasImg = document.createElement('canvas'),
+              ctxImg = canvasImg.getContext('2d');
+
+        canvasImg.width = img.width;
+        canvasImg.height = img.height;
+        ctxImg.drawImage(img, 0, 0);
+        console.log(img);
+        canvasImg.toBlob( blob => {
+          const formData = new FormData();
+          formData.append('image', blob);
+          fetch('https://neto-api.herokuapp.com/photo-booth', {
+            method: 'POST',
+            body: formData,
+          })
+          .then(response => console.log(response))
+          .catch(e => {
             document.querySelector('#error-message').style.display = 'block';
             document.querySelector('#error-message').textContent = 'Ошибка: ' + err;;
-          }
+          });
         });
 
-        const formData = new FormData();
-        const img = event.currentTarget.querySelector('img');
-        formData.append('image', img.src);
-        request.open('POST', `https://neto-api.herokuapp.com/photo-booth`);
-        request.send(formData);
-        // console.log(formData.get("image"));
       }
     });
 
