@@ -32,7 +32,7 @@ class TextEditor {
       this.readFile( file );
       this.setFilename( file.name );
     } else {
-      alert('Файл не может быть загружен. Расширение файла доджно быть "txt"');
+      alert('Файл не может быть загружен. Расширение файла должно быть "txt"');
     }
 
   }
